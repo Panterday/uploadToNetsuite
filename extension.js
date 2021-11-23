@@ -1,6 +1,5 @@
 const vscode = require("vscode");
-const fetch = (...args) =>
-  import("node-fetch").then(({ default: fetch }) => fetch(...args));
+const fetch = require("node-fetch");
 const fs = require("fs");
 const headerOauth10Generator = require("./headerOauth10Generator");
 const pathGenerator = require("./generatePathAndFile");
@@ -64,10 +63,11 @@ function activate(context) {
           const response = await fetch(url, config);
           if (response.ok) {
             const data = await response.json();
+            console.log(data);
             if (data.code === 200) {
               vscode.window.setStatusBarMessage("Archivo cargado en NS", 6000);
             } else {
-              vscode.window.showErrorMessage("Error " + data.data.path);
+              vscode.window.showErrorMessage("Error ");
             }
           } else {
             vscode.window.showErrorMessage(
